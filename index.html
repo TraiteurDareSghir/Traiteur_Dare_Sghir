@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traiteur Dare Sghir | تموين وتنظيم الحفلات والمناسبات</title>
+    <style>
+        /* إعدادات الهوية البصرية - ألوان ملكية فخمة */
+        :root {
+            --gold: #d4af37;
+            --gold-dark: #aa841c;
+            --dark-bg: #111111;
+            --card-bg: #ffffff;
+            --body-bg: #fcfaf2;
+            --text-main: #222222;
+            --text-muted: #666666;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--body-bg);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* الهيدر والقائمة العلوية */
+        header {
+            background-color: rgba(17, 17, 17, 0.98);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.15);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            color: var(--gold);
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--gold);
+        }
+
+        /* الواجهة الرئيسية الترحيبية */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.75)), url('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200') no-repeat center center/cover;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #ffffff;
+            padding: 20px;
+            margin-top: 60px;
+        }
+
+        .hero h1 {
+            font-size: 50px;
+            margin-bottom: 20px;
+            color: var(--gold);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin-bottom: 35px;
+            color: #f0f0f0;
+        }
+
+        .cta-btn {
+            background-color: var(--gold);
+            color: #ffffff;
+            padding: 14px 35px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 30px;
+            font-size: 18px;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            transition: 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            background-color: var(--gold-dark);
+            transform: translateY(-3px);
+        }
+
+        /* العناوين العامة */
+        section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 34px;
+            margin-bottom: 50px;
+            color: var(--dark-bg);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: var(--gold);
+            margin: 15px auto 0;
+        }
+
+        /* قسم الخدمات منظم ومقاد */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            padding: 35px 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--gold);
+            transition: 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .service-card h3 {
+            color: var(--dark-bg);
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+
+        /* معرض الصور */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            transition: 0.4s ease;
+        }
+
+        .gallery-grid img:hover {
+            transform: scale(1.03);
+            opacity: 0.9;
+        }
+
+        /* استمارة الطلب والخطوات الذكية */
+        .booking-container {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            padding: 45px;
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #eeeeee;
+            margin-bottom: 35px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: var(--gold);
+            width: 20%;
+            transition: 0.4s ease;
+        }
+
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+            animation: slideUp 0.4s ease-in-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        label.step-title {
+            display: block;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: var(--dark-bg);
+        }
+
+        input[type="number"], input[type="text"], input[type="tel"] {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 20px;
+            border: 1px solid #dddddd;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option-card {
+            background: #fafafa;
+            padding: 14px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid #eaeaea;
+            transition: 0.2s;
+        }
+
+        .option-card:hover {
+            background: #f1f1f1;
+            border-color: #cccccc;
+        }
+
+        .option-card input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--gold);
+        }
+
+        .menu-subtitle {
+            font-weight: bold;
+            margin: 20px 0 10px 0;
+            color: var(--gold-dark);
+            display: block;
+            border-bottom: 1px dashed var(--gold);
+            padding-bottom: 5px;
+        }
+
+        /* أزرار التحكم ف الفورم */
+        .buttons-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        button {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: 0.3s ease;
+        }
+
+        .btn-next {
+            background: var(--gold);
+            color: white;
+        }
+
+        .btn-next:hover {
+            background: var(--gold-dark);
+        }
+
+        .btn-prev {
+            background: #777777;
+            color: white;
+        }
+
+        .btn-prev:hover {
+            background: #555555;
+        }
+
+        .btn-submit {
+            background: #25D366;
+            color: white;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-submit:hover {
+            background: #20ba5a;
+        }
+
+        /* الفوتر */
+        footer {
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            text-align: center;
+            padding: 35px 20px;
+            margin-top: 80px;
+            font-size: 15px;
+            border-top: 3px solid var(--gold);
+        }
+
+        footer p span {
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        /* التوافق مع التلفونات */
+        @media (max-width: 768px) {
+            nav ul { display: none; }
+            .hero h1 { font-size: 34px; }
+            .hero p { font-size: 16px; }
+            .booking-container { padding: 25px; }
+            .section-title { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- القائمة العلوية للهيدر -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">🎪 Traiteur Dare Sghir</a>
+            <nav>
+                <ul>
+                    <li><a href="#home">الرئيسية</a></li>
+                    <li><a href="#services">خدماتنا</a></li>
+                    <li><a href="#gallery">معرض الحفلات</a></li>
+                    <li><a href="#booking">احجز مناسبتك</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- واجهة الموقع الترحيبية -->
+    <div class="hero" id="home">
+        <h1>مرحباً بكم في Traiteur Dare Sghir</h1>
+        <p>نصنع من مناسباتكم ذكريات لا تُنسى. تنظيم احترافي متكامل لجميع أنواع الأفراح، الأعراس، الخطوبات والمناسبات السعيدة بأرقى المأكولات المغربية.</p>
+        <a href="#booking" class="cta-btn">ابدأ بتجهيز طلبيتك الآن</a>
+    </div>
+
+    <!-- قسم الخدمات والمنظم بشكل منسق -->
+    <section id="services">
+        <h2 class="section-title">أنواع المناسبات التي ننظمها</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>💍 الأعراس والخطوبات</h3>
+                <p>تكفل تام بليلة العمر وتوفير كاع شروط الفخامة من طاولات فاخرة وأطباق برستيج تليق بضيوفكم.</p>
+            </div>
+            <div class="service-card">
+                <h3>👶 العقيقة والسبوع</h3>
+                <p>نحتفل معكم بالمولود الجديد عبر تنظيم مبهج وبوفيهات مغربية أصيلة ومتنوعة تلبي كل الأذواق.</p>
+            </div>
+            <div class="service-card">
+                <h3>🎓 الحفلات والمناسبات العامة</h3>
+                <p>تنظيم حفلات النجاح، أعياد الميلاد، والاجتماعات المهنية والمؤسساتية بدقة وااحترافية عالية.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- معرض أعمال Traiteur Dare Sghir -->
+    <section id="gallery">
+        <h2 class="section-title">ألبوم صور من حفلاتنا</h2>
+        <div class="gallery-grid">
+            <img src="https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=400" alt="تنظيم طاولات">
+            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=400" alt="مأكولات مغربية">
+            <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?q=80&w=400" alt="أجواء الحفلات">
+            <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?q=80&w=400" alt="حلويات المناسبات">
+        </div>
+    </section>
+
+    <!-- قسم الفورم الذكي المربوط بالواتساب -->
+    <section id="booking">
+        <h2 class="section-title">ركّب طلبيتك بنفسك (كوطاسيون)</h2>
+        
+        <div class="booking-container">
+            <div class="progress-bar"><div class="progress" id="progress"></div></div>
+
+            <form id="orderForm" onsubmit="event.preventDefault();">
+                
+                <!-- الخطوة 1: أنواع المناسبات -->
+                <div class="step active" id="step1">
+                    <label class="step-title">1. اختر نوع المناسبة السعيدة:</label>
+                    <div class="options-group">
+                        <label class="option-card"><input type="radio" name="event_type" value="عرس" checked> عرس (Mariage)</label>
+                        <label class="option-card"><input type="radio" name="event_type" value="خطوبة"> خطوبة (Fiançailles)</label>
+                        <label class="option-card"><input type="radio" name="event_type" value="سبوع / عقيقة"> سبوع / عقيقة</label>
+                        <label class="option-card"><input type="radio" name="event_type" value="حفلة تخرج / نجاح"> حفلة تخرج / نجاح</label>
+                        <label class="option-card"><input type="radio" name="event_type" value="عيد ميلاد"> عيد ميلاد</label>
+                        <label class="option-card"><input type="radio" name="event_type" value="مناسبة أخرى"> مناسبة أخرى</label>
+                    </div>
+                </div>
+
+                <!-- الخطوة 2: تحديد عدد الطاولات أو الأفراد -->
+                <div class="step" id="step2">
+                    <label class="step-title" id="quantity-label" for="tables_count">2. شحال من طبلة بغيتي؟ (الكمية):</label>
+                    <input type="number" id="tables_count" min="1" value="5">
+                    <p style="color: var(--text-muted); font-size: 14px;" id="quantity-note">* معلومة: كل طبلة كتكون مجهزة لـ 10 ديال الناس عادة.</p>
+                </div>
+
+                <!-- الخطوة 3: تحديد نوع الطبخ -->
+                <div class="step" id="step3">
+                    <label class="step-title">3. اختر نوع ونمط الطبخ المفضل:</label>
+                    <div class="options-group">
+                        <label class="option-card"><input type="radio" name="menu_style" value="مغربي تقليدي" checked> طهي مغربي تقليدي الأصيل (أطباق الطاولات)</label>
+                        <label class="option-card"><input type="radio" name="menu_style" value="بوفيه عصري"> بوفيه مفتوح وعصري كامل (Buffet)</label>
+                    </div>
+                </div>
+
+                <!-- الخطوة 4: الأطباق بالتفصيل -->
+                <div class="step" id="step4">
+                    <label class="step-title">4. حدد مكونات المنيو بالتفصيل:</label>
+                    
+                    <!-- منيو الطبخ المغربي التقليدي -->
+                    <div id="moroccan-menu">
+                        <span class="menu-subtitle">المقبلات / البسطيلة:</span>
+                        <div class="options-group">
+                            <label class="option-card"><input type="checkbox" name="dishes_moroccan" value="بسطيلة الحوت الهميزية"> بسطيلة الحوت الكبيرة بالسمك الفاخر</label>
+                            <label class="option-card"><input type="checkbox" name="dishes_moroccan" value="بسطيلة الدجاج باللوز"> بسطيلة الدجاج التقليدية باللوز المقرمش</label>
+                            <label class="option-card"><input type="checkbox" name="dishes_moroccan" value="شلاظة برستيج ملكية"> شلاظة برستيج ملكية (متنوعة وفواكه البحر)</label>
+                        </div>
+
+                        <span class="menu-subtitle">الطبق الرئيسي (الهمة والشان):</span>
+                        <div class="options-group">
+                            <label class="option-card"><input type="checkbox" name="dishes_moroccan" value="اللحم بالبرقوق واللوز والملوج"> اللحم الغنمي بالبرقوق واللوز المدغمر</label>
+                            <label class="option-card"><input type="checkbox" name="dishes_moroccan" value="الدجاج محمر بالدغميرة والزيتون"> الدجاج المحمر بالدغميرة الفاسية واللوز</label>
+                            <label class="option-card"><input type="checkbox" name="dishes_moroccan" value="المشوي الغنمي على حقو وطريقو"> المشوي الغنمي (نصف خروف أو خروف كامل)</label>
+                        </div>
+
+                        <span class="menu-subtitle">الديسير والتحلية:</span>
+                        <div class="options-group">
+                            <label class="option-card"><input type="checkbox" name="dishes_moroccan" value="فواكه موسمية همة"> طبق الفواكه الموسمية والـ Exotic الفاخرة</label>
+                            <label class="option-card"><input type="checkbox" name="dishes_moroccan" value="كلاص ملكي باللوز"> كلاص (Glace) ملكي كبير بنكهة النوجا واللوز</label>
+                        </div>
+                    </div>
+
+                    <!-- منيو البوفيه العصري (Buffet) -->
+                    <div id="buffet-menu" style="display: none;">
+                        <span class="menu-subtitle">المملحات والمقبلات الصغيرة (Salés):</span>
+                        <div class="options-group">
+                            <label class="option-card"><input type="checkbox" name="dishes_buffet" value="مملحات برستيج مشكلة"> تشكيلة مملحات برستيج (بريوات، سيجار، كيش)</label>
+                            <label class="option-card"><input type="checkbox" name="dishes_buffet" value="ميني برغر وسندوتشات"> ميني برغر فاخر + ميني شاورما وبانيني</label>
+                        </div>
+
+                        <span class="menu-subtitle">الأطباق الدافئة للبوفيه (Plats Chauds):</span>
+                        <div class="options-group">
+                            <label class="option-card"><input type="checkbox" name="dishes_buffet" value="بصيطلات صغار حوت ودجاج"> ميني بسطيلة بالحوت وميني بسطيلة بالدجاج</label>
+                            <label class="option-card"><input type="checkbox" name="dishes_buffet" value="بايلا فواكه البحر"> طبق بايلا (Paëlla) إسبانية عملاقة بفواكه البحر</label>
+                        </div>
+
+                        <span class="menu-subtitle">الحلويات والديسير العصري:</span>
+                        <div class="options-group">
+                            <label class="option-card"><input type="checkbox" name="dishes_buffet" value="ميني سواري ومكارون"> حلويات ميني سواري فاخرة (Mignardises) + ماكارون</label>
+                            <label class="option-card"><input type="checkbox" name="dishes_buffet" value="عصائر طبيعية منعشة"> تشكيلة عصائر طبيعية بريستيج (مانجو، أفوكا، فواكه حمراء)</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- الخطوة 5: المعلومات الشخصية والتاريخ مكتوب يدوياً -->
+                <div class="step" id="step5">
+                    <label class="step-title">5. معلومات الاتصال والموعد:</label>
+                    
+                    <label for="client_name" style="font-weight: 500; font-size: 14px; display:block; margin-bottom:5px;">الاسم الكامل:</label>
+                    <input type="text" id="client_name" placeholder="الاسم الكامل ديالك" required>
+                    
+                    <label for="client_phone" style="font-weight: 500; font-size: 14px; display:block; margin-bottom:5px;">رقم الهاتف:</label>
+                    <input type="tel" id="client_phone" placeholder="رقم الهاتف (06XXXXXXXX)" required>
+                    
+                    <label for="event_date" style="font-weight: 500; font-size: 14px; display:block; margin-bottom:5px;">تاريخ المناسبة (اكتبو بيدك):</label>
+                    <input type="text" id="event_date" placeholder="مثال: 15 غشت، أو شهر 10 الجاي، أو 25/12" required>
+                </div>
+
+                <!-- أزرار التنقل والتحكم -->
+                <div class="buttons-group">
+                    <button type="button" class="btn-prev" id="btnPrev" style="display: none;" onclick="changeStep(-1)">السابق</button>
+                    <button type="button" class="btn-next" id="btnNext" onclick="changeStep(1)">التالي</button>
+                    <button type="button" class="btn-submit" id="btnSubmit" style="display: none;" onclick="sendToWhatsApp()">إرسال الطلب إلى الواتساب 💬</button>
+                </div>
+
+            </form>
+        </div>
+    </section>
+
+    <!-- الفوتر السفلي للموقع -->
+    <footer>
+        <p>© 2026 جميع الحقوق محفوظة لـ <span>Traiteur Dare Sghir</span>.</p>
+    </footer>
+
+    <!-- نظام تشغيل ومعالجة البيانات وإرسالها للواتساب -->
+    <script>
+        let currentStep = 1;
+        const totalSteps = 5;
+
+        // تفعيل التغيير الديناميكي للأقسام
+        document.querySelectorAll('input[name="menu_style"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const moroccanMenu = document.getElementById('moroccan-menu');
+                const buffetMenu = document.getElementById('buffet-menu');
+                const qtyLabel = document.getElementById('quantity-label');
+                const qtyNote = document.getElementById('quantity-note');
+
+                if (this.value === "مغربي تقليدي") {
+                    moroccanMenu.style.display = "block";
+                    buffetMenu.style.display = "none";
+                    qtyLabel.innerText = "2. شحال من طبلة بغيتي؟ (الكمية):";
+                    qtyNote.innerText = "* معلومة: كل طبلة كتكون مجهزة لـ 10 ديال الناس عادة.";
+                } else {
+                    moroccanMenu.style.display = "none";
+                    buffetMenu.style.display = "block";
+                    qtyLabel.innerText = "2. حدد عدد الأفراد / الضيوف (الكمية):";
+                    qtyNote.innerText = "* معلومة: البوفيه كيتحدد بالحساب ديال كاع الأفراد لي حاضرين.";
+                }
+            });
+        });
+
+        function changeStep(direction) {
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            currentStep += direction;
+            document.getElementById(`step${currentStep}`).classList.add('active');
+
+            document.getElementById('progress').style.width = `${(currentStep / totalSteps) * 100}%`;
+
+            document.getElementById('btnPrev').style.display = currentStep === 1 ? 'none' : 'block';
+            if (currentStep === totalSteps) {
+                document.getElementById('btnNext').style.display = 'none';
+                document.getElementById('btnSubmit').style.display = 'block';
+            } else {
+                document.getElementById('btnNext').style.display = 'block';
+                document.getElementById('btnSubmit').style.display = 'none';
+            }
+        }
+
+        function sendToWhatsApp() {
+            const eventType = document.querySelector('input[name="event_type"]:checked').value;
+            const tablesCount = document.getElementById('tables_count').value;
+            const menuStyle = document.querySelector('input[name="menu_style"]:checked').value;
+            
+            const checkedDishes = [];
+            if (menuStyle === "مغربي تقليدي") {
+                document.querySelectorAll('input[name="dishes_moroccan"]:checked').forEach(ch => checkedDishes.push(ch.value));
+            } else {
+                document.querySelectorAll('input[name="dishes_buffet"]:checked').forEach(ch => checkedDishes.push(ch.value));
+            }
+            const dishesText = checkedDishes.length > 0 ? checkedDishes.join(' + ') : 'لم يتم تحديد أطباق معينة بعد';
+
+            const name = document.getElementById('client_name').value;
+            const phone = document.getElementById('client_phone').value;
+            const date = document.getElementById('event_date').value; // كيقرا النص المكتوب بـ يد الكليان
+
+            if(!name || !phone || !date) {
+                alert("المرجو إدخال الاسم، الهاتف وتاريخ المناسبة قبل الإرسال!");
+                return;
+            }
+
+            const whatsappNumber = "212668546864"; 
+            const qtyUnit = menuStyle === "مغربي تقليدي" ? "طبلة" : "فرد / ضيف";
+
+            const textMessage = `مرحباً Traiteur Dare Sghir، عندي طلب كوطاسيون جديد ومفصل من الموقع:\n\n` +
+                                `* 🏛️ نوع المناسبة:* ${eventType}\n` +
+                                `* 🍽️ الكمية المطلوبة:* ${tablesCount} ${qtyUnit}\n` +
+                                `* 🍳 نمط ونوع الطبخ:* ${menuStyle}\n` +
+                                `* 🍗 المكونات والأطباق المختارة:* ${dishesText}\n\n` +
+                                `*بيانات الاتصال بالزبون:*\n` +
+                                `* 👤 الإسم الكامل:* ${name}\n` +
+                                `* 📞 رقم الهاتف:* ${phone}\n` +
+                                `* 📅 تاريخ الحفلة المكتوب:* ${date}`;
+
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(textMessage)}`, '_blank');
+        }
+    </script>
+</body>
+</html>
