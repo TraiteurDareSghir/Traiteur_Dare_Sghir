@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hamza Print | المنتجات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --primary: #4f46e5; --dark: #0f172a; --light: #f8fafc; --gray: #64748b; --border: #e2e8f0; --whatsapp: #25d366; }
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Cairo', sans-serif; }
+        body { background-color: var(--light); color: var(--dark); }
+        header { background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); padding: 15px 20px; }
+        .navbar { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 24px; font-weight: 700; color: var(--primary); text-decoration: none; }
+        .logo span { color: var(--dark); }
+        .back-btn { text-decoration: none; color: var(--primary); font-weight: 600; font-size: 15px; }
+
+        .page-title { text-align: center; margin: 40px 0; font-size: 32px; }
+
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto 60px; padding: 0 20px; }
+        .product-card { background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.02); border: 1px solid var(--border); display: flex; flex-direction: column; }
+        .product-img { width: 100%; height: 320px; object-fit: cover; }
+        .product-info { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
+        .product-title { font-size: 18px; margin-bottom: 10px; font-weight: 700; }
+        .product-price { font-size: 20px; color: var(--dark); font-weight: 700; margin-bottom: 15px; }
+        
+        .options-group { margin-bottom: 15px; }
+        .options-label { font-size: 14px; color: var(--gray); margin-bottom: 8px; display: block; }
+        .sizes, .colors { display: flex; gap: 8px; flex-wrap: wrap; }
+        .size-radio, .color-radio { display: none; }
+        .size-label { display: inline-block; border: 1px solid var(--border); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 600; }
+        .size-radio:checked + .size-label { border-color: var(--primary); background: #f5f3ff; color: var(--primary); }
+        
+        .color-label { display: inline-block; width: 26px; height: 26px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; box-shadow: 0 0 0 1px var(--border); }
+        .color-radio:checked + .color-label { transform: scale(1.1); border-color: #fff; box-shadow: 0 0 0 2px var(--primary); }
+
+        .order-btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; background: var(--whatsapp); color: #fff; border: none; padding: 12px; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: auto; }
+        footer { background: var(--dark); color: #fff; text-align: center; padding: 30px; margin-top: 40px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="navbar">
+            <a href="index.html" class="logo">Hamza <span>Print</span></a>
+            <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-right"></i> الرجوع للأقسام</a>
+        </div>
+    </header>
+
+    <h1 id="category-title" class="page-title">المنتجات</h1>
+
+    <main class="products-grid" id="products-container"></main>
+
+    <footer>
+        <p>&copy; 2026 - Hamza Print</p>
+    </footer>
+
+    <script>
+        const whatsappNumber = "+212665399343";
+
+        // جلب الصنف من الرابط (URL)
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentCategory = urlParams.get('cat') || 'all';
+
+        // عناوين الصفحات حسب الصنف
+        const catTitles = {
+            'tshirt': 'قسم التيشرتات',
+            'hoodie': 'قسم الهوديز (Hoodies)',
+            'sweatshirt': 'قسم السويت شيرت'
+        };
+        if(catTitles[currentCategory]) {
+            document.getElementById('category-title').innerText = catTitles[currentCategory];
+        }
+
+        // جلب المنتجات من التخزين
+        let products = JSON.parse(localStorage.getItem('hamza_products')) || [];
+
+        function displayProducts() {
+            const container = document.getElementById('products-container');
+            container.innerHTML = '';
+
+            // تصفية المنتجات حسب الصنف المختار
+            const filteredProducts = products.filter(p => p.category === currentCategory);
+
+            if(filteredProducts.length === 0) {
+                container.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color:var(--gray); margin: 40px 0;">لا توجد منتجات في هذا القسم حالياً. يمكنك إضافتها من لوحة التحكم.</p>';
+                return;
+            }
+
+            filteredProducts.forEach(product => {
+                let sizesHTML = product.sizes.map((s, i) => `
+                    <input type="radio" name="size-${product.id}" value="${s}" id="size-${product.id}-${i}" ${i===0?'checked':''}>
+                    <label for="size-${product.id}-${i}" class="size-label">${s}</label>
+                `).join('');
+
+                let colorsHTML = product.colors.map((c, i) => `
+                    <input type="radio" name="color-${product.id}" value="${c.name}" id="color-${product.id}-${i}" ${i===0?'checked':''}>
+                    <label for="color-${product.id}-${i}" class="color-label" style="background-color: ${c.code};" title="${c.name}"></label>
+                `).join('');
+
+                container.innerHTML += `
+                    <div class="product-card">
+                        <img src="${product.img}" class="product-img" alt="${product.name}">
+                        <div class="product-info">
+                            <h3 class="product-title">${product.name}</h3>
+                            <div class="product-price">${product.price} درهم</div>
+                            <div class="options-group">
+                                <span class="options-label">المقاس المتوفر:</span>
+                                <div class="sizes">${sizesHTML}</div>
+                            </div>
+                            <div class="options-group">
+                                <span class="options-label">اللون المتوفر:</span>
+                                <div class="colors">${colorsHTML}</div>
+                            </div>
+                            <button class="order-btn" onclick="sendOrder(${product.id}, '${product.name}', '${product.price}')">
+                                <i class="fab fa-whatsapp"></i> اطلب الآن عبر الواتساب
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function sendOrder(id, name, price) {
+            const size = document.querySelector(`input[name="size-${id}"]:checked`).value;
+            const color = document.querySelector(`input[name="color-${id}"]:checked`).value;
+
+            const text = `مرحباً Hamza Print 👋\n\nأريد طلب هذا المنتج من فضلك:\n\n` +
+                         `📦 *المنتج:* ${name}\n` +
+                         `💰 *الثمن:* ${price} درهم\n` +
+                         `📏 *المقاس:* ${size}\n` +
+                         `🎨 *اللون:* ${color}\n\n` +
+                         `يرجى تأكيد الطلب لبدء الطباعة والتوصيل.`;
+
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        displayProducts();
+    </script>
+</body>
+</html>
